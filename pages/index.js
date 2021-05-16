@@ -6,7 +6,11 @@ import styles from "@/styles/Home.module.css";
 export default function Home() {
   return (
     <Layout>
-      <h1>Home</h1>
+      <h1>Upcoming Events</h1>
     </Layout>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch("/api/events");
 }
