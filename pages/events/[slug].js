@@ -11,7 +11,7 @@ export default function EventPage({ evt }) {
     console.log("delete");
   };
 
-  const event = evt.evt[0];
+  const event = evt[0];
 
   return (
     <Layout>
@@ -27,12 +27,16 @@ export default function EventPage({ evt }) {
           </a>
         </div>
         <span>
-          {event.date} at {event.time}
+          {new Date(event.date).toLocaleDateString("en-US")} at {event.time}
         </span>
         <h1>{event.name}</h1>
         {event.image && (
           <div className={styles.image}>
-            <Image src={event.image} width={960} height={600} />
+            <Image
+              src={event.image.formats.large.url}
+              width={960}
+              height={600}
+            />
           </div>
         )}
 
@@ -61,11 +65,10 @@ export default function EventPage({ evt }) {
 // }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events`);
   const events = await res.json();
-  const eventsArray = events.events;
 
-  const paths = eventsArray.map((evt) => ({
+  const paths = events.map((evt) => ({
     params: { slug: evt.slug },
   }));
 
@@ -76,11 +79,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const res = await fetch(`${API_URL}/api/events/${slug}`);
-  const events = await res.json();
+  const res = await fetch(`${API_URL}/events?slug=${slug}`);
+  const event = await res.json();
+  console.log(event);
 
   return {
-    props: { evt: events },
+    props: { evt: event },
     revalidate: 1,
   };
 }
