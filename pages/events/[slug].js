@@ -12,7 +12,7 @@ export default function EventPage({ evt }) {
   };
 
   const event = evt.evt[0];
-  console.log(event);
+
   return (
     <Layout>
       <div className={styles.event}>
@@ -78,7 +78,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { slug } }) {
   const res = await fetch(`${API_URL}/api/events/${slug}`);
   const events = await res.json();
-  console.log(slug);
 
   return {
     props: { evt: events },
