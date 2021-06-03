@@ -4,6 +4,8 @@ import Layout from "@/components/Layout";
 import { API_URL } from "@/config/index";
 import styles from "@/styles/Form.module.css";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddEventPage() {
   const [values, setValues] = useState({
@@ -18,7 +20,15 @@ export default function AddEventPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitTed");
+
+    //Validation
+    const hasEmptyFields = Object.values(values).some(
+      (element) => element === ""
+    );
+
+    if (hasEmptyFields) {
+      toast.error("🦄 Please fill all fields");
+    }
   };
 
   const handleInputChange = (e) => {
@@ -30,6 +40,7 @@ export default function AddEventPage() {
     <Layout title="Add New Page">
       <Link href="/events">Go Back</Link>
       <h1>Add Event</h1>
+      <ToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
           <div>
