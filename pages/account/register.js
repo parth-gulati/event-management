@@ -14,7 +14,11 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+
+    if (password != passwordConfirm) {
+      toast.error("Passwords do not match");
+      return;
+    }
   };
 
   return (
