@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 import styles from "@/styles/AuthForm.module.css";
+import AuthContext from "@/context/AuthContext";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,10 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
+  const { register, error } = useContext(AuthContext);
+
   const handleSubmit = (e) => {
+    register({ username, email, password });
     e.preventDefault();
 
     if (password != passwordConfirm) {
