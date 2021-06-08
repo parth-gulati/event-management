@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function EventsPage({ events, page, total }) {
   return (
     <Layout>
-      <h1>Upcoming Events</h1>
+      <h1>Events</h1>
       {events.length === 0 && <h3>No Upcoming Events</h3>}
       {events.map((x) => (
         <EventItem key={x.id} evt={x}>
